@@ -1,0 +1,66 @@
+{
+  "Clans": [
+    {
+      "Name": "1",
+      "Units": [
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 6,
+            "Y": 10
+          },
+          "Speed": 1,
+          "Hp": 30,
+          "Damage": 5,
+          "DamageDistance": 2,
+          "AttackCount": 1,
+          "SightDistance": 11
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 8,
+            "Y": 10
+          },
+          "Speed": 1,
+          "Hp": 30,
+          "Damage": 5,
+          "DamageDistance": 2,
+          "AttackCount": 1,
+          "SightDistance": 11
+        }
+      ]
+    },
+    {
+      "Name": "2",
+      "Units": [
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 10,
+            "Y": 20
+          },
+          "Speed": 1,
+          "Hp": 30,
+          "Damage": 5,
+          "DamageDistance": 2,
+          "AttackCount": 1,
+          "SightDistance": 11
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 15,
+            "Y": 20
+          },
+          "Speed": 1,
+          "Hp": 30,
+          "Damage": 5,
+          "DamageDistance": 2,
+          "AttackCount": 1,
+          "SightDistance": 11
+        }
+      ]
+    }
+  ]
+}

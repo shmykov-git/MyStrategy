@@ -1,6 +1,6 @@
 ﻿namespace MyStrategy.Tools
 {
-    public interface IMyToolSettings
+    public interface ISceneManagerSettings
     {
 
     }

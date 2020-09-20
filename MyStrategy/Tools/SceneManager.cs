@@ -13,7 +13,7 @@ namespace MyStrategy.Tools
 
         public void Start()
         {
-            Scene = File.ReadAllText("scene.json").FromJson<Scene>();
+            Scene = File.ReadAllText(settings.SceneFileName).FromJson<Scene>();
             Scene.Clans.ForEach(clan => clan.Units.ForEach(unit =>
             {
                 unit.Scene = Scene;

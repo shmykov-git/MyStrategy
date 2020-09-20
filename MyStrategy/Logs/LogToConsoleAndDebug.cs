@@ -1,9 +1,9 @@
 ﻿using System;
 using Suit.Logs;
 
-namespace MyStrategy.Test
+namespace MyStrategy.Logs
 {
-    class LogToConsoleAndDebug : ILog
+    public class LogToConsoleAndDebug : ILog
     {
         public void Warn(string msg)
         {

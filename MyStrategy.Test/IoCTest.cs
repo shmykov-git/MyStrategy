@@ -1,4 +1,5 @@
-﻿using MyStrategy.Tools;
+﻿using MyStrategy.Logs;
+using MyStrategy.Tools;
 using Suit;
 using Suit.Logs;
 using Unity;

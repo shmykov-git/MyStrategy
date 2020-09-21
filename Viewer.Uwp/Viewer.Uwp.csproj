@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -161,7 +162,9 @@
       <Version>6.2.8</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Viewer\Extensions\" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Suit">
       <HintPath>..\..\..\Users\shmyk\.nuget\packages\shmykov.dev.suit\1.0.3\lib\netstandard2.0\Suit.dll</HintPath>

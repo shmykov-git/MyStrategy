@@ -21,41 +21,13 @@ namespace MyStrategy.Test
         {
             var sceneManager = IoC.Get<SceneManager>();
             var log = IoC.Get<ILog>();
-            var viewer = (TestViewer)IoC.Get<IViewer>();
+            var viewer = IoC.Get<TestViewer>();
 
-            sceneManager.Start();
+            sceneManager.InitScene();
+
             viewer.IsActive = true;
-            var scene = sceneManager.Scene;
 
-            for (var round = 1; round < 20; round++)
-            {
-                scene.Round = round;
-
-                log.Debug($"===== round {round} =====");
-                foreach (var unit in sceneManager.Scene.Units.ToArray())
-                {
-                    foreach (var opponent in unit.GetUnderSightOpponents())
-                    foreach (var act in unit.PairActs)
-                    {
-                        act.Do(unit, opponent);
-                    }
-
-                    foreach (var act in unit.SelfActs)
-                    {
-                        act.Do(unit);
-                    }
-                }
-            }
-
-            foreach (var clan in scene.Clans.Where(c=>c.Units.Count>0))
-            {
-                log.Debug($"Win {clan}");
-
-                foreach (var unit in clan.Units)
-                {
-                    log.Debug($"unit {unit.Id} hp:{unit.Hp}");
-                }
-            }
+            sceneManager.PlayScene().Wait();
         }
     }
 }

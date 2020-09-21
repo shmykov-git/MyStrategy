@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -9,6 +12,8 @@ using MyStrategy.DataModel;
 using MyStrategy.Extensions;
 using MyStrategy.Tools;
 using Suit.Logs;
+using Viewer.Uwp.Commands;
+using Color = Windows.UI.Color;
 
 namespace Viewer.Uwp.Viewer
 {
@@ -20,14 +25,20 @@ namespace Viewer.Uwp.Viewer
         public void MoveUnit(Unit unit, Vector position)
         {
             var control = unitControls[unit.Id];
+            var w2 = control.Width / 2;
 
-            Canvas.SetTop(control, sceneHeight - unit.Position.Y);
-            Canvas.SetLeft(control, unit.Position.X);
+            Canvas.SetTop(control, sceneHeight - unit.Position.Y + w2);
+            Canvas.SetLeft(control, unit.Position.X - w2);
         }
 
         public void SetUnitHp(Unit unit, float hp)
         {
+            var diameter = HpToDiameter(hp);
+            var control = unitControls[unit.Id];
+            control.Height = diameter;
+            control.Width = diameter;
 
+            MoveUnit(unit, unit.Position);
         }
 
         public void Kill(Unit unit)
@@ -36,11 +47,25 @@ namespace Viewer.Uwp.Viewer
             unitControls.Remove(unit.Id);
         }
 
+        private void AddUnit(Point point)
+        {
+            log.Debug($"point:{point}");
+        }
+
+        private string selectedClanName = "1";
+
         public void Start()
         {
-            this.sceneHeight = Page.Height;
+            this.sceneHeight = Page.Canvas.Height;
+            ICommand cms;
+            this.Page.DataContext = new
+            {
+                SelectClanCommand = new Command(clanName => selectedClanName = clanName.ToString()),
+                RefreshCommand = new Command(_=>{}),
+            };
+            this.Page.Canvas.PointerPressed += (o, a) => { AddUnit(a.GetCurrentPoint(this.Page.Canvas).Position); };
 
-            sceneManager.Start();
+            sceneManager.InitScene();
             viewer.Controller = this;
             viewer.IsActive = true;
 
@@ -50,57 +75,37 @@ namespace Viewer.Uwp.Viewer
             {
                 var control = new Ellipse()
                 {
-                    Fill = new SolidColorBrush() { Color = Colors.Red },
-                    Height = 15,
-                    Width = 15,
+                    Fill = new SolidColorBrush() { Color = ClanToColor(unit.Clan) },
                     StrokeThickness = 1,
                     Stroke = new SolidColorBrush() { Color = Colors.Black }
                 };
 
-                Canvas.SetTop(control, sceneHeight - unit.Position.Y);
-                Canvas.SetLeft(control, unit.Position.X);
+                unitControls.Add(unit.Id, control);
+
+                SetUnitHp(unit, unit.Hp);
+                MoveUnit(unit, unit.Position);
 
                 Page.Canvas.Children.Add(control);
-                unitControls.Add(unit.Id, control);
             }
 
-            Play(scene);
+            sceneManager.PlayScene();
         }
 
-
-        private async void Play(Scene scene)
+        private double HpToDiameter(float hp)
         {
+            return 5 + 5 * Math.Log(1 + hp);
+        }
 
-            for (var round = 1; round < 20; round++)
+        private Color ClanToColor(Clan clan)
+        {
+            switch (clan.Name)
             {
-                await Task.Delay(1000);
-
-                scene.Round = round;
-
-                log.Debug($"===== round {round} =====");
-                foreach (var unit in sceneManager.Scene.Units.ToArray())
-                {
-                    foreach (var opponent in unit.GetUnderSightOpponents())
-                    foreach (var act in unit.PairActs)
-                    {
-                        act.Do(unit, opponent);
-                    }
-
-                    foreach (var act in unit.SelfActs)
-                    {
-                        act.Do(unit);
-                    }
-                }
-            }
-
-            foreach (var clan in scene.Clans.Where(c => c.Units.Count > 0))
-            {
-                log.Debug($"Win {clan}");
-
-                foreach (var unit in clan.Units)
-                {
-                    log.Debug($"unit {unit.Id} hp:{unit.Hp}");
-                }
+                case "1":
+                    return Colors.Red;
+                case "2":
+                    return Colors.Green;
+                default:
+                    throw new NotImplementedException();
             }
         }
 

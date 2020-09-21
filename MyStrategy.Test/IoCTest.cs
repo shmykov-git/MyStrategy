@@ -11,7 +11,9 @@ namespace MyStrategy.Test
         public static void Register(UnityContainer container)
         {
             container.RegisterType<ILog, LogToConsoleAndDebug>();
-            container.RegisterSingleton<IViewer, TestViewer>();
+
+            container.RegisterSingleton<TestViewer>();
+            container.RegisterFactory<IViewer>(c => IoC.Get<TestViewer>());
 
             container.RegisterSingleton<TestSettings>();
             container.RegisterFactory<ISceneManagerSettings>(c => IoC.Get<TestSettings>());

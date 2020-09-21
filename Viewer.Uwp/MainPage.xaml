@@ -6,10 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Height="500" Width="500">
-
-    <Canvas x:Name="canvas">
-
-    </Canvas>
+    Background="LightGreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width = "Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <RadioButton Command="{Binding SelectClanCommand}" IsChecked="True" CommandParameter="1" GroupName="Clan">Clan 1</RadioButton>
+            <RadioButton Command="{Binding SelectClanCommand}" CommandParameter="2" GroupName="Clan">Clan 2</RadioButton>
+            <Button Command="{Binding RefreshCommand}">Replay</Button>
+        </StackPanel>
+        <Canvas Grid.Column="1" x:Name="canvas" Height="500" Width="500">
+        </Canvas>
+    </Grid>
 </Page>

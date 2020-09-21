@@ -44,6 +44,11 @@ namespace MyStrategy.DataModel
             return new Vector(a.X - b.X, a.Y - b.Y);
         }
 
+        public static implicit operator Vector((int, int) a)
+        {
+            return new Vector(a.Item1, a.Item2);
+        }
+
         public override string ToString()
         {
             return $"({X:F1}, {Y:F1})";

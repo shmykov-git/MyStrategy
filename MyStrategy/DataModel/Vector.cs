@@ -49,6 +49,16 @@ namespace MyStrategy.DataModel
             return new Vector(a.Item1, a.Item2);
         }
 
+        public static implicit operator Vector((float, float) a)
+        {
+            return new Vector(a.Item1, a.Item2);
+        }
+
+        public static implicit operator Vector((double, double) a)
+        {
+            return new Vector((float)a.Item1, (float)a.Item2);
+        }
+
         public override string ToString()
         {
             return $"({X:F1}, {Y:F1})";

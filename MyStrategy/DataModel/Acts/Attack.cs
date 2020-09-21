@@ -21,17 +21,21 @@ namespace MyStrategy.DataModel.Acts
             main.Round.AttackCount++;
         }
 
+        public int Key { get; set; }
+
         private void DoAttack(Unit main, Unit enemy)
         {
-            if (enemy.Hp < main.Damage)
+            if (enemy.Hp <= main.Damage)
             {
                 enemy.Hp = 0;
                 enemy.Kill();
+                main.RemovePairAct<Attack>();
+                main.RemoveSelfAct<MoveToFight>();
                 log.Debug($"{main.Id} kill {enemy.Id}");
             }
             else
             {
-                enemy.Hp -= main.Damage;
+                enemy.Hp -= main.Damage.ToInt();
                 log.Debug($"{main.Id} damage {enemy.Id} Hp: {enemy.Hp}");
             }
         }

@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Windows.Input;
+using MyStrategy.Commands;
 using MyStrategy.DataModel;
 using Suit.Logs;
 
@@ -7,6 +10,9 @@ namespace MyStrategy.Tools
     public class TestViewer : IViewer
     {
         public bool IsActive { get; set; }
+
+        public Command<string> ClanNameChangedCommand { get; set; }
+        public Command<Vector> ClickCommand { get; set; }
 
         public void OnPropertyChange(Unit unit, PropertyInfo property, object value)
         {
@@ -26,6 +32,11 @@ namespace MyStrategy.Tools
         }
 
         public void OnKill(Unit unit)
+        {
+            
+        }
+
+        public void OnCreate(Unit unit)
         {
             
         }

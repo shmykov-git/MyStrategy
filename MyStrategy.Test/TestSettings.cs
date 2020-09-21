@@ -8,5 +8,6 @@ namespace MyStrategy.Test
         public int FpsInterval => 0;
         public int SceneWidth => 100;
         public int SceneHeight => 100;
+        public int RoundCount => 20;
     }
 }

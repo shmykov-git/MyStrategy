@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Windows.Input;
+using MyStrategy.Commands;
 using MyStrategy.DataModel;
 using MyStrategy.Tools;
 using Suit.Logs;
@@ -15,9 +18,17 @@ namespace Viewer.Uwp.Viewer
             Controller.Kill(unit);
         }
 
+        public void OnCreate(Unit unit)
+        {
+            Controller.Create(unit);
+        }
+
+        public Command<string> ClanNameChangedCommand { get; set; }
+        public Command<Vector> ClickCommand { get; set; }
+
         public void OnPropertyChange(Unit unit, PropertyInfo property, object value)
         {
-            if (!IsActive)
+            if (!IsActive || !unit.IsActive)
                 return;
 
             switch (property.Name)
@@ -29,7 +40,7 @@ namespace Viewer.Uwp.Viewer
 
                 case nameof(Unit.Hp):
                     log.Debug($" >>{unit} hp:{value:F0}");
-                    Controller.SetUnitHp(unit, (float)value);
+                    Controller.SetUnitHp(unit, (int)value);
                     break;
             }
         }

@@ -6,5 +6,6 @@
         int FpsInterval { get; }
         int SceneWidth { get; }
         int SceneHeight { get; }
+        int RoundCount { get; }
     }
 }

@@ -31,9 +31,21 @@ namespace MyStrategy.Extensions
             return unit.SelfActs.OfType<TSelfAct>().FirstOrDefault(a => a.Key == unit.Id);
         }
 
-        public static void RemoveSelfAct<TSelfAct>(this Unit unit, TSelfAct selfAct) where TSelfAct : class, ISelfAct
+        public static TPairAct FindPairAct<TPairAct>(this Unit unit) where TPairAct : class, IPairAct
         {
+            return unit.PairActs.OfType<TPairAct>().FirstOrDefault(a => a.Key == unit.Id);
+        }
+
+        public static void RemoveSelfAct<TSelfAct>(this Unit unit) where TSelfAct : class, ISelfAct
+        {
+            var selfAct = unit.FindSelfAct<TSelfAct>();
             unit.SelfActs.Remove(selfAct);
+        }
+
+        public static void RemovePairAct<TPairAct>(this Unit unit) where TPairAct : class, IPairAct
+        {
+            var pairAct = unit.FindPairAct<TPairAct>();
+            unit.PairActs.Remove(pairAct);
         }
 
         public static void AddSelfAct<TSelfAct>(this Unit unit, TSelfAct selfAct) where TSelfAct : class, ISelfAct

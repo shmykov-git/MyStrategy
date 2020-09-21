@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\TaskCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -134,8 +135,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Scenes\scene2.json" />
     <None Include="Viewer.Uwp_TemporaryKey.pfx" />
-    <Content Include="Assets\scene.json" />
+    <Content Include="Scenes\scene.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />

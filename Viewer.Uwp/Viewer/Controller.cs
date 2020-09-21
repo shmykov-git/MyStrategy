@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Shapes;
 using MyStrategy.DataModel;
 using MyStrategy.Extensions;
 using MyStrategy.Tools;
+using Suit.Extensions;
 using Suit.Logs;
 using Viewer.Uwp.Commands;
 using Color = Windows.UI.Color;
@@ -24,17 +25,18 @@ namespace Viewer.Uwp.Viewer
 
         public void MoveUnit(Unit unit, Vector position)
         {
-            var control = unitControls[unit.Id];
+            var control = GetUnitControl(unit);
             var w2 = control.Width / 2;
+            var h2 = control.Height / 2;
 
-            Canvas.SetTop(control, sceneHeight - unit.Position.Y + w2);
             Canvas.SetLeft(control, unit.Position.X - w2);
+            Canvas.SetTop(control, sceneHeight - unit.Position.Y - h2);
         }
 
         public void SetUnitHp(Unit unit, float hp)
         {
             var diameter = HpToDiameter(hp);
-            var control = unitControls[unit.Id];
+            var control = GetUnitControl(unit);
             control.Height = diameter;
             control.Width = diameter;
 
@@ -43,52 +45,71 @@ namespace Viewer.Uwp.Viewer
 
         public void Kill(Unit unit)
         {
-            Page.Canvas.Children.Remove(unitControls[unit.Id]);
+            var control = GetUnitControl(unit);
+            Page.Canvas.Children.Remove(control);
             unitControls.Remove(unit.Id);
+        }
+
+        public void Create(Unit unit)
+        {
+            GetUnitControl(unit);
         }
 
         private void AddUnit(Point point)
         {
             log.Debug($"point:{point}");
+            viewer.ClickCommand?.Execute((point.X, sceneHeight - point.Y));
         }
-
-        private string selectedClanName = "1";
 
         public void Start()
         {
+            viewer.Controller = this;
             this.sceneHeight = Page.Canvas.Height;
-            ICommand cms;
-            this.Page.DataContext = new
+
+            var context = new
             {
-                SelectClanCommand = new Command(clanName => selectedClanName = clanName.ToString()),
-                RefreshCommand = new Command(_=>{}),
+                SelectClanCommand = new Command(clanName => viewer.ClanNameChangedCommand.Execute(clanName.ToString())),
+                RefreshCommand = new TaskCommand(Play),
             };
+            Page.DataContext = context;
+
             this.Page.Canvas.PointerPressed += (o, a) => { AddUnit(a.GetCurrentPoint(this.Page.Canvas).Position); };
 
+            context.RefreshCommand.Execute(null);
+        }
+
+        private Task Play()
+        {
+            viewer.IsActive = false;
             sceneManager.InitScene();
-            viewer.Controller = this;
             viewer.IsActive = true;
 
-            var scene = sceneManager.Scene;
+            unitControls.Clear();
+            Page.Canvas.Children.Cast<Ellipse>().ToArray().ForEach(ellipse => Page.Canvas.Children.Remove(ellipse));
 
-            foreach (var unit in scene.Units)
+            return sceneManager.PlayScene();
+        }
+
+        private Ellipse GetUnitControl(Unit unit)
+        {
+            if (unitControls.ContainsKey(unit.Id))
+                return unitControls[unit.Id];
+
+            var control = new Ellipse()
             {
-                var control = new Ellipse()
-                {
-                    Fill = new SolidColorBrush() { Color = ClanToColor(unit.Clan) },
-                    StrokeThickness = 1,
-                    Stroke = new SolidColorBrush() { Color = Colors.Black }
-                };
+                Fill = new SolidColorBrush() { Color = ClanToColor(unit.Clan) },
+                StrokeThickness = 1,
+                Stroke = new SolidColorBrush() { Color = Colors.Black }
+            };
 
-                unitControls.Add(unit.Id, control);
+            unitControls.Add(unit.Id, control);
 
-                SetUnitHp(unit, unit.Hp);
-                MoveUnit(unit, unit.Position);
+            SetUnitHp(unit, unit.Hp);
+            MoveUnit(unit, unit.Position);
 
-                Page.Canvas.Children.Add(control);
-            }
+            Page.Canvas.Children.Add(control);
 
-            sceneManager.PlayScene();
+            return unitControls[unit.Id];
         }
 
         private double HpToDiameter(float hp)

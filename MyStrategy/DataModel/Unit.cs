@@ -3,6 +3,7 @@ using System.Threading;
 using MyStrategy.Aspects;
 using MyStrategy.DataModel.Acts;
 using Newtonsoft.Json;
+using Suit.Extensions;
 
 namespace MyStrategy.DataModel
 {
@@ -12,7 +13,7 @@ namespace MyStrategy.DataModel
         public UnitType Type { get; set; }
 
         [NotifyViewerAspect]
-        public float Hp { get; set; }
+        public int Hp { get; set; }
 
         [NotifyViewerAspect]
         public Vector Position { get; set; }
@@ -40,6 +41,9 @@ namespace MyStrategy.DataModel
         public int Id { get; }
 
         [JsonIgnore]
+        public bool IsActive { get; set; }
+
+        [JsonIgnore]
         public Scene Scene { get; set; }
 
         [JsonIgnore]
@@ -50,11 +54,9 @@ namespace MyStrategy.DataModel
             Id = Interlocked.Increment(ref _id);
         }
 
-        [JsonIgnore]
-        public List<ISelfAct> SelfActs { get; } = new List<ISelfAct>();
+        public List<ISelfAct> SelfActs { get; set; } = new List<ISelfAct>();
 
-        [JsonIgnore]
-        public List<IPairAct> PairActs { get; } = new List<IPairAct>();
+        public List<IPairAct> PairActs { get; set; } = new List<IPairAct>();
 
         [JsonIgnore]
         public VectorFn PositionFn => () => Position;
@@ -81,10 +83,10 @@ namespace MyStrategy.DataModel
         {
             return $"{Id}";
         }
-    }
 
-    public class UnitRound
-    {
-        public int AttackCount { get; set; }
+        public Unit Clone()
+        {
+            return this.ToJsonNamedStr().FromNamedJson<Unit>();
+        }
     }
 }

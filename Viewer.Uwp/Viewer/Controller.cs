@@ -35,10 +35,8 @@ namespace Viewer.Uwp.Viewer
 
         public void SetUnitHp(Unit unit, float hp)
         {
-            var diameter = HpToDiameter(hp);
             var control = GetUnitControl(unit);
-            control.Height = diameter;
-            control.Width = diameter;
+            ((LinearGradientBrush) control.Fill).GradientStops[1].Offset = 1 - (double) unit.Hp / unit.BaseHp;
 
             MoveUnit(unit, unit.Position);
         }
@@ -95,12 +93,21 @@ namespace Viewer.Uwp.Viewer
             if (unitControls.ContainsKey(unit.Id))
                 return unitControls[unit.Id];
 
+            var clanColor = ClanToColor(unit.Clan);
+            var brush = new LinearGradientBrush() {StartPoint = new Point(0.5, 0), EndPoint = new Point(0.5, 1)};
+            brush.GradientStops.Add(new GradientStop() { Color = Colors.White, Offset = 0 });
+            brush.GradientStops.Add(new GradientStop() { Color = clanColor, Offset = 0 });
+            brush.GradientStops.Add(new GradientStop() { Color = clanColor, Offset = 1 });
+
             var control = new Ellipse()
             {
-                Fill = new SolidColorBrush() { Color = ClanToColor(unit.Clan) },
+                //Fill = new SolidColorBrush() { Color = ClanToColor(unit.Clan) },
+                Fill = brush,
                 StrokeThickness = 1,
                 Stroke = new SolidColorBrush() { Color = Colors.Black }
             };
+            control.Height = unit.Radius * 2;
+            control.Width = unit.Radius * 2;
 
             unitControls.Add(unit.Id, control);
 
@@ -112,10 +119,10 @@ namespace Viewer.Uwp.Viewer
             return unitControls[unit.Id];
         }
 
-        private double HpToDiameter(float hp)
-        {
-            return 5 + 5 * Math.Log(1 + hp);
-        }
+        //private double HpToDiameter(float hp)
+        //{
+        //    return 5 + 5 * Math.Log(1 + hp);
+        //}
 
         private Color ClanToColor(Clan clan)
         {

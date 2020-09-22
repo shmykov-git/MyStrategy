@@ -17,6 +17,8 @@ namespace MyStrategy.DataModel
         [NotifyViewerAspect]
         public Vector Position { get; set; }
 
+        public float Radius { get; set; }
+
         [NotifyViewerAspect]
         public float Speed { get; set; }
 
@@ -36,6 +38,8 @@ namespace MyStrategy.DataModel
 
         private static int _id = 0;
         public int Id { get; }
+
+        public int BaseHp { get; set; }
 
         [JsonIgnore]
         public bool IsActive { get; set; }

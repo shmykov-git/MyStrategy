@@ -43,6 +43,7 @@ namespace MyStrategy.Tools
             {
                 unit.Scene = Scene;
                 unit.Clan = clan;
+                unit.BaseHp = unit.Hp;
             }));
 
             Scene.Units.ForEach(unit=>
@@ -60,16 +61,15 @@ namespace MyStrategy.Tools
             var round = 0;
             while (++round <= settings.RoundCount || settings.RoundCount < 0)
             {
-                if (settings.FpsInterval > 0)
-                    await Task.Delay(settings.FpsInterval);
-
                 Scene.Round = round;
-
                 log.Debug($"===== round {round} =====");
 
-                foreach (var unit in Scene.Units.ToArray())
-                foreach (var act in unit.Acts.ToArray())
-                    act.Do();
+                if (settings.FpsInterval > 0)
+                {
+                    await Task.WhenAll(Task.Delay(settings.FpsInterval), DoRound());
+                }
+                else
+                    DoRound();
             }
 
             foreach (var clan in Scene.Clans.Where(c => c.Units.Count > 0))
@@ -81,6 +81,14 @@ namespace MyStrategy.Tools
                     log.Debug($"unit {unit.Id} hp:{unit.Hp}");
                 }
             }
+        }
+
+        //[LoggingAspect(LoggingRule.Performance)]
+        async Task DoRound()
+        {
+            foreach (var unit in Scene.Units.ToArray())
+            foreach (var act in unit.Acts.ToArray())
+                act.Do();
         }
 
         #region IoC

@@ -67,6 +67,7 @@ namespace MyStrategy.Tools
                 if (settings.FpsInterval > 0)
                 {
                     await Task.WhenAll(Task.Delay(settings.FpsInterval), DoRound());
+                    await Task.Delay(1);
                 }
                 else
                     DoRound();

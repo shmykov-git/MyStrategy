@@ -13,7 +13,7 @@
           "Speed": 2,
           "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 20,
+          "DamageDistance": 25,
           "AttackCount": 1,
           "SightDistance": 110
         },
@@ -27,7 +27,7 @@
           "Speed": 2,
           "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 20,
+          "DamageDistance": 25,
           "AttackCount": 1,
           "SightDistance": 110
         },
@@ -41,7 +41,7 @@
           "Speed": 2,
           "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 20,
+          "DamageDistance": 25,
           "AttackCount": 1,
           "SightDistance": 110
         }
@@ -60,7 +60,7 @@
           "Speed": 2,
           "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 20,
+          "DamageDistance": 25,
           "AttackCount": 1,
           "SightDistance": 110
         },
@@ -74,7 +74,7 @@
           "Speed": 2,
           "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 20,
+          "DamageDistance": 25,
           "AttackCount": 1,
           "SightDistance": 110
         },
@@ -88,7 +88,7 @@
           "Speed": 2,
           "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 20,
+          "DamageDistance": 25,
           "AttackCount": 1,
           "SightDistance": 110
         }

@@ -6,6 +6,8 @@ namespace MyStrategy.DataModel
 
     public struct Vector
     {
+        public static Vector Zero = (0, 0);
+
         public float X { get; set; }
         public float Y { get; set; }
 

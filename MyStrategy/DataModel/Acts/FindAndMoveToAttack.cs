@@ -35,7 +35,10 @@ namespace MyStrategy.DataModel.Acts
             
             if (moveToAttack == null)
             {
-                var enemy = Unit.GetUnderSightEnemies().FirstOrDefault();
+                var enemy = Unit.GetUnderSightEnemies()
+                    .OrderBy(e => (Unit.Position - e.Position).Length2)
+                    .FirstOrDefault();
+
                 if (enemy == null)
                     return;
 

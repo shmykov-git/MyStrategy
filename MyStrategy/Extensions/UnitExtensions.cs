@@ -67,5 +67,15 @@ namespace MyStrategy.Extensions
         {
             return unit.IsAtDistance(enemy.Position, unit.DamageDistance);
         }
+
+        public static bool IsIntersected(this Unit one, Unit two)
+        {
+            return one.IsAtDistance(two.Position, one.Radius + two.Radius);
+        }
+
+        public static IEnumerable<Unit> GetIntersectedUnits(this Unit unit)
+        {
+            return unit.Scene.Units.Where(u => u != unit && IsIntersected(unit, u));
+        }
     }
 }

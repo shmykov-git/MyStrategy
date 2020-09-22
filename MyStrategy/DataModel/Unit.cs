@@ -7,8 +7,7 @@ using Suit.Extensions;
 
 namespace MyStrategy.DataModel
 {
-    // Data part
-    public partial class Unit
+    public class Unit
     {
         public UnitType Type { get; set; }
 
@@ -32,11 +31,9 @@ namespace MyStrategy.DataModel
 
         [NotifyViewerAspect]
         public float SightDistance { get; set; }
-    }
 
-    // Architecture part
-    public partial class Unit
-    {
+
+
         private static int _id = 0;
         public int Id { get; }
 
@@ -54,9 +51,8 @@ namespace MyStrategy.DataModel
             Id = Interlocked.Increment(ref _id);
         }
 
-        public List<ISelfAct> SelfActs { get; set; } = new List<ISelfAct>();
-
-        public List<IPairAct> PairActs { get; set; } = new List<IPairAct>();
+        [JsonIgnore]
+        public List<IAct> Acts { get; set; } = new List<IAct>();
 
         [JsonIgnore]
         public VectorFn PositionFn => () => Position;

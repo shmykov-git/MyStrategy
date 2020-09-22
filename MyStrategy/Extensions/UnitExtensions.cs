@@ -10,69 +10,62 @@ namespace MyStrategy.Extensions
     public static class UnitExtensions
     {
         // TODO: do not iterate all units
-        public static IEnumerable<Unit> GetActUnits(this Unit main)
+        public static IEnumerable<Unit> GetEnemies(this Unit unit)
         {
-            return main.Scene.Units.Where(unit => unit.Clan != main.Clan);
+            return unit.Scene.Units.Where(enemy => enemy.Clan != unit.Clan);
         }
 
-        public static IEnumerable<Unit> GetUnderSightOpponents(this Unit main)
+        public static IEnumerable<Unit> GetUnderSightEnemies(this Unit unit)
         {
-            var sightDistance2 = main.SightDistance * main.SightDistance;
+            var sightDistance2 = unit.SightDistance * unit.SightDistance;
 
-            foreach (var unit in main.GetActUnits())
+            foreach (var enemy in unit.GetEnemies())
             {
-                if ((unit.Position - main.Position).Length2 <= sightDistance2)
-                    yield return unit;
+                if ((unit.Position - enemy.Position).Length2 <= sightDistance2)
+                    yield return enemy;
             }
         }
 
-        public static TSelfAct FindSelfAct<TSelfAct>(this Unit unit) where TSelfAct : class, ISelfAct
+        public static TSelfAct GetAct<TSelfAct>(this Unit unit) where TSelfAct : class, IAct
         {
-            return unit.SelfActs.OfType<TSelfAct>().FirstOrDefault(a => a.Key == unit.Id);
+            return unit.Acts.OfType<TSelfAct>().FirstOrDefault();
         }
 
-        public static TPairAct FindPairAct<TPairAct>(this Unit unit) where TPairAct : class, IPairAct
+        public static void RemoveAct<TAct>(this Unit unit, TAct act = null) where TAct : class, IAct
         {
-            return unit.PairActs.OfType<TPairAct>().FirstOrDefault(a => a.Key == unit.Id);
+            var actToRemove = act ?? unit.GetAct<TAct>();
+            if (actToRemove != null)
+            {
+                unit.Acts.Remove(actToRemove);
+                actToRemove.Clean();
+            }
         }
 
-        public static void RemoveSelfAct<TSelfAct>(this Unit unit) where TSelfAct : class, ISelfAct
+        public static void AddAct<TAct>(this Unit unit, TAct act) where TAct : class, IAct
         {
-            var selfAct = unit.FindSelfAct<TSelfAct>();
-            unit.SelfActs.Remove(selfAct);
-        }
-
-        public static void RemovePairAct<TPairAct>(this Unit unit) where TPairAct : class, IPairAct
-        {
-            var pairAct = unit.FindPairAct<TPairAct>();
-            unit.PairActs.Remove(pairAct);
-        }
-
-        public static void AddSelfAct<TSelfAct>(this Unit unit, TSelfAct selfAct) where TSelfAct : class, ISelfAct
-        {
-            unit.SelfActs.Add(selfAct);
+            unit.Acts.Add(act);
         }
 
         public static void Kill(this Unit unit)
         {
-            var kill = unit.FindSelfAct<Kill>();
+            var kill = unit.GetAct<Kill>();
             if (kill == null)
-                unit.AddSelfAct(new Kill() {Key = unit.Id});
+                unit.AddAct(new Kill(unit));
         }
 
-        public static bool IsAtDistance(this Unit main, Vector position, float distance)
+        public static bool IsAtDistance(this Unit unit, Vector position, float distance)
         {
-            return (position - main.Position).Length2 <= distance * distance;
+            return (position - unit.Position).Length2 <= distance * distance;
         }
 
-        public static bool IsAtSightDistance(this Unit main, Unit slave)
+        public static bool IsAtSightDistance(this Unit unit, Unit enemy)
         {
-            return main.IsAtDistance(slave.Position, main.SightDistance);
+            return unit.IsAtDistance(enemy.Position, unit.SightDistance);
         }
 
-        public static bool IsAtAttackDistance(this Unit main, Unit slave)
+        public static bool IsAtAttackDistance(this Unit unit, Unit enemy)
         {
-            return main.IsAtDistance(slave.Position, main.DamageDistance);
+            return unit.IsAtDistance(enemy.Position, unit.DamageDistance);
         }
     }
 }

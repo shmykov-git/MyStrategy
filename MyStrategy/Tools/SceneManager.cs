@@ -28,6 +28,7 @@ namespace MyStrategy.Tools
                 unit.Position = position;
                 unit.Clan = clan;
                 unit.Scene = Scene;
+                unit.AddAct(new FindAndMoveToAttack(unit));
 
                 clan.Units.Add(unit);
                 unit.IsActive = true;
@@ -46,8 +47,7 @@ namespace MyStrategy.Tools
 
             Scene.Units.ForEach(unit=>
             {
-                unit.PairActs.Add(new FindAndMoveToFight() {Key = unit.Id});
-                unit.PairActs.Add(new Attack() {Key = unit.Id});
+                unit.Acts.Add(new FindAndMoveToAttack(unit));
             });
 
             defaultUnit = Scene.Units.First().Clone();
@@ -66,19 +66,10 @@ namespace MyStrategy.Tools
                 Scene.Round = round;
 
                 log.Debug($"===== round {round} =====");
-                foreach (var unit in Scene.Units.ToArray())
-                {
-                    foreach (var opponent in unit.GetUnderSightOpponents().ToArray())
-                    foreach (var act in unit.PairActs.ToArray())
-                    {
-                        act.Do(unit, opponent);
-                    }
 
-                    foreach (var act in unit.SelfActs.ToArray())
-                    {
-                        act.Do(unit);
-                    }
-                }
+                foreach (var unit in Scene.Units.ToArray())
+                foreach (var act in unit.Acts.ToArray())
+                    act.Do();
             }
 
             foreach (var clan in Scene.Clans.Where(c => c.Units.Count > 0))

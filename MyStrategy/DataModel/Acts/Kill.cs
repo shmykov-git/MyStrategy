@@ -1,21 +1,38 @@
-﻿using MyStrategy.Tools;
+﻿using System.Linq;
+using MyStrategy.Extensions;
+using MyStrategy.Tools;
 using Suit;
+using Suit.Extensions;
 using Suit.Logs;
 
 namespace MyStrategy.DataModel.Acts
 {
-    public class Kill : ISelfAct
+    public class Kill : IAct
     {
         private readonly ILog log = IoC.Get<ILog>();
         private readonly IViewer viewer = IoC.Get<IViewer>();
 
-        public void Do(Unit unit)
+        public void Clean()
+        { }
+
+        public Unit Unit { get; }
+
+        public Kill(Unit unit)
         {
-            unit.Clan.Units.Remove(unit);
-            log.Debug($"{unit.Id} is dead");
-            viewer.OnKill(unit);
+            Unit = unit;
         }
 
-        public int Key { get; set; }
+        public void Do()
+        {
+            Unit.Acts.ToList().ForEach(act => Unit.RemoveAct(act));
+            Unit.Scene.Units.SelectMany(unit => unit.Acts.Select(act => act as IEnemyAct).Where(act => act != null))
+                .Where(act => act.Enemy == Unit).ToList().ForEach(act => act.Unit.RemoveAct(act));
+            Unit.Clan.Units.Remove(Unit);
+
+            log.Debug($"{Unit.Id} is dead");
+            viewer.OnKill(Unit);
+
+            Unit.IsActive = false;
+        }
     }
 }

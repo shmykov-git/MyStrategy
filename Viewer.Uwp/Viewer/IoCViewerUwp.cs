@@ -11,7 +11,8 @@ namespace Viewer.Uwp.Viewer
     {
         public static void Register(UnityContainer container)
         {
-            container.RegisterType<ILog, LogToConsoleAndDebug>();
+            //container.RegisterType<ILog, LogToConsoleAndDebug>();
+            container.RegisterType<ILog, NoLog>();
 
             container.RegisterSingleton<UwpViewer>();
             container.RegisterFactory<IViewer>(c => IoC.Get<UwpViewer>());

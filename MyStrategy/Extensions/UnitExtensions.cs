@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MyStrategy.DataModel;
 using MyStrategy.DataModel.Acts;
 
@@ -9,10 +7,14 @@ namespace MyStrategy.Extensions
 {
     public static class UnitExtensions
     {
-        // TODO: do not iterate all units
+        public static IEnumerable<Unit> GetActives(this Unit unit)
+        {
+            return unit.Scene.Net.GetActives(unit);
+        }
+
         public static IEnumerable<Unit> GetEnemies(this Unit unit)
         {
-            return unit.Scene.Units.Where(enemy => enemy.Clan != unit.Clan);
+            return unit.GetActives().Where(enemy => enemy.Clan != unit.Clan);
         }
 
         public static IEnumerable<Unit> GetUnderSightEnemies(this Unit unit)
@@ -75,7 +77,7 @@ namespace MyStrategy.Extensions
 
         public static IEnumerable<Unit> GetIntersectedUnits(this Unit unit)
         {
-            return unit.Scene.Units.Where(u => u != unit && IsIntersected(unit, u));
+            return unit.GetActives().Where(u => IsIntersected(unit, u));
         }
     }
 }

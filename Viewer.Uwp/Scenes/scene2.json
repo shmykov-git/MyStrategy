@@ -15,7 +15,8 @@
           "Damage": 5,
           "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 110
+          "SightDistance": 110,
+          "ActiveDistance": 150
         },
         {
           "Type": "Attacker",
@@ -29,7 +30,8 @@
           "Damage": 5,
           "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 110
+          "SightDistance": 110,
+          "ActiveDistance": 150
         },
         {
           "Type": "Attacker",
@@ -43,7 +45,8 @@
           "Damage": 5,
           "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 110
+          "SightDistance": 110,
+          "ActiveDistance": 150
         }
       ]
     },
@@ -62,7 +65,8 @@
           "Damage": 5,
           "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 110
+          "SightDistance": 110,
+          "ActiveDistance": 150
         },
         {
           "Type": "Attacker",
@@ -76,7 +80,8 @@
           "Damage": 5,
           "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 110
+          "SightDistance": 110,
+          "ActiveDistance": 150 
         },
         {
           "Type": "Attacker",
@@ -90,7 +95,8 @@
           "Damage": 5,
           "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 110
+          "SightDistance": 110,
+          "ActiveDistance": 150
         }
       ]
     }

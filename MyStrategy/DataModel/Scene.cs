@@ -6,6 +6,8 @@ namespace MyStrategy.DataModel
     {
         public int Round { get; set; }
 
+        public SceneNet Net { get; set; }
+
         public List<Clan> Clans { get; set; }
 
         public IEnumerable<Unit> Units

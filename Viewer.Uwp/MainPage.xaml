@@ -20,7 +20,7 @@
             <RadioButton Command="{Binding SelectClanCommand}" CommandParameter="2" GroupName="Clan">Clan 2</RadioButton>
             <Button Command="{Binding RefreshCommand}">Replay</Button>
         </StackPanel>
-        <Canvas Grid.Column="1" x:Name="canvas" Height="500" Width="500" Background="LightGreen">
+        <Canvas Grid.Column="1" x:Name="canvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Background="LightGreen">
         </Canvas>
     </Grid>
 </Page>

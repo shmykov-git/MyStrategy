@@ -8,8 +8,8 @@ namespace MyStrategy.DataModel
     {
         public static Vector Zero = (0, 0);
 
-        public float X { get; set; }
-        public float Y { get; set; }
+        public float X;
+        public float Y;
 
         public Vector(float x, float y)
         {

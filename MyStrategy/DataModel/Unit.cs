@@ -15,7 +15,19 @@ namespace MyStrategy.DataModel
         public int Hp { get; set; }
 
         [NotifyViewerAspect]
-        public Vector Position { get; set; }
+        public Vector Position
+        {
+            get => position;
+            set
+            {
+                position = value;
+
+                if (IsActive)
+                    Scene.Net.NotifyPosition(this);
+            }
+        }
+
+        public Index PositionIndex { get; set; }
 
         public float Radius { get; set; }
 
@@ -34,6 +46,7 @@ namespace MyStrategy.DataModel
         [NotifyViewerAspect]
         public float SightDistance { get; set; }
 
+        public float ActiveDistance { get; set; }
 
 
         private static int _id = 0;
@@ -42,7 +55,18 @@ namespace MyStrategy.DataModel
         public int BaseHp { get; set; }
 
         [JsonIgnore]
-        public bool IsActive { get; set; }
+        public bool IsActive
+        {
+            get => isActive;
+            set
+            {
+                isActive = value;
+                if (isActive)
+                    Scene.Net.AddPosition(this);
+                else
+                    Scene.Net.RemovePosition(this);
+            }
+        }
 
         [JsonIgnore]
         public Scene Scene { get; set; }
@@ -63,6 +87,8 @@ namespace MyStrategy.DataModel
 
         private int round;
         private UnitRound unitRound;
+        private Vector position;
+        private bool isActive;
 
         [JsonIgnore]
         public UnitRound Round

@@ -15,6 +15,7 @@ using Suit.Extensions;
 using Suit.Logs;
 using Viewer.Uwp.Commands;
 using Color = Windows.UI.Color;
+using Point = Windows.Foundation.Point;
 
 namespace Viewer.Uwp.Viewer
 {
@@ -62,10 +63,12 @@ namespace Viewer.Uwp.Viewer
         public void Start()
         {
             viewer.Controller = this;
-            this.sceneHeight = Page.Canvas.Height;
+            this.sceneHeight = settings.SceneHeight;
 
             var context = new
             {
+                CanvasWidth = settings.SceneWidth,
+                CanvasHeight = settings.SceneHeight,
                 SelectClanCommand = new Command(clanName => viewer.ClanNameChangedCommand.Execute(clanName.ToString())),
                 RefreshCommand = new TaskCommand(Play),
             };

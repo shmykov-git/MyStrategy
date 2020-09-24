@@ -1,4 +1,5 @@
 ﻿using System;
+using MyStrategy.Extensions;
 
 namespace MyStrategy.DataModel
 {
@@ -20,6 +21,7 @@ namespace MyStrategy.DataModel
         public float Length => (float)Math.Sqrt(Length2);
         public float Length2 => X * X + Y * Y;
         public Vector ToLength(float len) => (len / Length) * this;
+        public bool IsZero => X.Abs() <= float.Epsilon && Y.Abs() <= float.Epsilon;
 
         public static Vector operator /(Vector a, float k)
         {
@@ -44,6 +46,21 @@ namespace MyStrategy.DataModel
         public static Vector operator -(Vector a, Vector b)
         {
             return new Vector(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static Vector operator -(Vector a)
+        {
+            return new Vector(-a.X, -a.Y);
+        }
+
+        public static Vector operator ~(Vector a)
+        {
+            return new Vector(a.Y, -a.X);
+        }
+
+        public static float operator *(Vector a, Vector b)
+        {
+            return a.X * b.X + a.Y * b.Y;
         }
 
         public static implicit operator Vector((int, int) a)

@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using MyStrategy.DataModel;
 using MyStrategy.Extensions;
 using Suit;
 using Suit.Logs;
 
-namespace MyStrategy.DataModel.Acts
+namespace MyStrategy.Acts
 {
     public class MoveToAttack: IEnemyAct
     {
@@ -23,6 +23,9 @@ namespace MyStrategy.DataModel.Acts
             this.Enemy = enemy;
         }
 
+        private Vector correctMove;
+        private int correctCount;
+
         public void Do()
         {
             var attackEnemy = Unit.GetAct<AttackEnemy>();
@@ -37,14 +40,8 @@ namespace MyStrategy.DataModel.Acts
                 if (attackEnemy != null)
                     Unit.RemoveAct(attackEnemy);
 
-                Unit.Position += (Enemy.Position - Unit.Position).ToLength(Unit.Speed);
-
-                var correction = Unit.GetIntersectedUnits()
-                    .Select(u => new {V = Unit.Position - u.Position, R = u.Radius + Unit.Radius})
-                    .Select(v => v.V.ToLength(v.R - v.V.Length))
-                    .Sum();
-
-                Unit.Position += correction;
+                var move = (Enemy.Position - Unit.Position).ToLength(Unit.Speed);
+                Unit.Position += move + Unit.GetMoveIntersectCorrection(move);
 
                 log.Debug($"{Unit.Id} move to Enemy {Enemy.Id}");
             }

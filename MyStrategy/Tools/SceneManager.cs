@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MyStrategy.Acts;
 using MyStrategy.Commands;
 using MyStrategy.DataModel;
-using MyStrategy.DataModel.Acts;
 using MyStrategy.Extensions;
 using Suit.Aspects;
 using Suit.Extensions;

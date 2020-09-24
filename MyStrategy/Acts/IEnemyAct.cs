@@ -1,4 +1,6 @@
-﻿namespace MyStrategy.DataModel.Acts
+﻿using MyStrategy.DataModel;
+
+namespace MyStrategy.Acts
 {
     public interface IEnemyAct : IAct
     {

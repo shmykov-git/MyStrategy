@@ -1,8 +1,9 @@
-﻿using MyStrategy.Extensions;
+﻿using MyStrategy.DataModel;
+using MyStrategy.Extensions;
 using Suit;
 using Suit.Logs;
 
-namespace MyStrategy.DataModel.Acts
+namespace MyStrategy.Acts
 {
     public class AttackEnemy : IEnemyAct
     {

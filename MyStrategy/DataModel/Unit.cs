@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using MyStrategy.Acts;
 using MyStrategy.Aspects;
-using MyStrategy.DataModel.Acts;
 using Newtonsoft.Json;
 using Suit.Extensions;
 

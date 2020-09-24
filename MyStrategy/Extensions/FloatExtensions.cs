@@ -13,5 +13,10 @@ namespace MyStrategy.Extensions
         {
             return (int)Math.Round(x);
         }
+
+        public static float Abs(this float x)
+        {
+            return x < 0 ? -x : x;
+        }
     }
 }

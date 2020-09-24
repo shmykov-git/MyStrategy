@@ -6,28 +6,47 @@
         {
           "Type": "Attacker",
           "Position": {
-            "X": 6,
-            "Y": 10
+            "X": 60,
+            "Y": 100
           },
-          "Speed": 1,
-          "Hp": 30,
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 2,
+          "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 11
+          "SightDistance": 110,
+          "ActiveDistance": 150
         },
         {
           "Type": "Attacker",
           "Position": {
-            "X": 8,
-            "Y": 10
+            "X": 80,
+            "Y": 100
           },
-          "Speed": 1,
-          "Hp": 30,
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 2,
+          "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 11
+          "SightDistance": 110,
+          "ActiveDistance": 150
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 100,
+            "Y": 100
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 110,
+          "ActiveDistance": 150
         }
       ]
     },
@@ -37,28 +56,47 @@
         {
           "Type": "Attacker",
           "Position": {
-            "X": 10,
-            "Y": 20
+            "X": 100,
+            "Y": 200
           },
-          "Speed": 1,
-          "Hp": 30,
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 2,
+          "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 11
+          "SightDistance": 110,
+          "ActiveDistance": 150
         },
         {
           "Type": "Attacker",
           "Position": {
-            "X": 15,
-            "Y": 20
+            "X": 150,
+            "Y": 200
           },
-          "Speed": 1,
-          "Hp": 30,
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
           "Damage": 5,
-          "DamageDistance": 2,
+          "DamageDistance": 25,
           "AttackCount": 1,
-          "SightDistance": 11
+          "SightDistance": 110,
+          "ActiveDistance": 150 
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 50,
+            "Y": 200
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 110,
+          "ActiveDistance": 150
         }
       ]
     }

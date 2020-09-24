@@ -1,11 +1,11 @@
 ﻿using System.Linq;
+using MyStrategy.DataModel;
 using MyStrategy.Extensions;
 using MyStrategy.Tools;
 using Suit;
-using Suit.Extensions;
 using Suit.Logs;
 
-namespace MyStrategy.DataModel.Acts
+namespace MyStrategy.Acts
 {
     public class Kill : IAct
     {

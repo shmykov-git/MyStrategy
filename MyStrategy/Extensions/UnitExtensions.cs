@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MyStrategy.Acts;
 using MyStrategy.DataModel;
-using MyStrategy.DataModel.Acts;
 
 namespace MyStrategy.Extensions
 {
@@ -78,6 +78,16 @@ namespace MyStrategy.Extensions
         public static IEnumerable<Unit> GetIntersectedUnits(this Unit unit)
         {
             return unit.GetActives().Where(u => IsIntersected(unit, u));
+        }
+
+        public static Vector GetMoveIntersectCorrection(this Unit unit, Vector move)
+        {
+            var nextUnitPosition = unit.Position + move;
+
+            return unit.GetIntersectedUnits()
+                .Select(u => new { V = nextUnitPosition - u.Position, R = u.Radius + unit.Radius })
+                .Select(v => v.V.ToLength(v.R - v.V.Length))
+                .Sum();
         }
     }
 }

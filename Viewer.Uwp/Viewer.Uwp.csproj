@@ -135,9 +135,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="Scenes\scene2.json" />
-    <None Include="Viewer.Uwp_TemporaryKey.pfx" />
     <Content Include="Scenes\scene.json" />
+    <None Include="Viewer.Uwp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />

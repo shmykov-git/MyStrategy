@@ -23,9 +23,6 @@ namespace MyStrategy.Acts
             this.Enemy = enemy;
         }
 
-        private Vector correctMove;
-        private int correctCount;
-
         public void Do()
         {
             var attackEnemy = Unit.GetAct<AttackEnemy>();

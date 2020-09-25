@@ -27,6 +27,21 @@ namespace MyStrategy.DataModel
             return !a.Equals(b);
         }
 
+        public static Index operator +(Index a, Index b)
+        {
+            return new Index(a.I + b.I, a.J + b.J);
+        }
+
+        public static Index operator -(Index a, Index b)
+        {
+            return new Index(a.I - b.I, a.J - b.J);
+        }
+
+        public static implicit operator Index((int, int) a)
+        {
+            return new Index(a.Item1, a.Item2);
+        }
+
         public bool Equals(Index a)
         {
             return I == a.I && J == a.J;

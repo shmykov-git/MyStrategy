@@ -39,7 +39,7 @@ namespace MyStrategy.Tools
         public void InitScene()
         {
             Scene = File.ReadAllText(settings.SceneFileName).FromJson<Scene>();
-            Scene.Net = new SceneNet((settings.SceneHeight, settings.SceneWidth), (50, 50), 10);
+            Scene.Net = new SceneNet((settings.SceneHeight, settings.SceneWidth), (50, 50), 5, 10);
 
             Scene.Clans.ForEach(clan => clan.Units.ForEach(unit =>
             {

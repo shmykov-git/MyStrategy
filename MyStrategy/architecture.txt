@@ -30,5 +30,15 @@ Any Act is responsible for some simple operation:
 The main thing of the acts - you can write as match as you need for any simple or complex game logic
 You can write something like AtackEnemyButSeparateUitsWhenBallCames. You will have a lot of game actions for any unit.
 
+Viewer - you can use any engine you know (unity, monogame...)
+Take the interface, write models (2d, 3d). The world is designed as 2d, but it can get Z cood and you can show it in 3d
+It is the most simple harcode viewer writed on wpf (the worst performance architected). But you can see the world (for free...)
+
+Math:
+Vector - 2d float world vector 
+Index - 2d integer position structure
+
 How units move:
-pathfinding process is under construction now...
+some correction processes - just do not intersect the units (simplest solution)
+the pathfinding is very complicated and is under consstruction now...
+

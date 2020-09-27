@@ -1,0 +1,89 @@
+{
+  "Clans": [
+    {
+      "Name": "1",
+      "Units": [
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 230,
+            "Y": 200
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 310,
+          "ActiveDistance": 350
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 270,
+            "Y": 200
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 310,
+          "ActiveDistance": 350
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 230,
+            "Y": 180
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 310,
+          "ActiveDistance": 350
+        },
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 270,
+            "Y": 180
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 310,
+          "ActiveDistance": 350
+        }
+      ]
+    },
+    {
+      "Name": "2",
+      "Units": [
+        {
+          "Type": "Attacker",
+          "Position": {
+            "X": 250,
+            "Y": 250
+          },
+          "Radius": 10,
+          "Speed": 2,
+          "Hp": 100000,
+          "Damage": 5,
+          "DamageDistance": 25,
+          "AttackCount": 1,
+          "SightDistance": 110,
+          "ActiveDistance": 150
+        }
+      ]
+    }
+  ]
+}

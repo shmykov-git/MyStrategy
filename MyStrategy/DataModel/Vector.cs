@@ -1,11 +1,12 @@
 ﻿using System;
 using MyStrategy.Extensions;
+using Newtonsoft.Json;
 
 namespace MyStrategy.DataModel
 {
     public delegate Vector VectorFn();
 
-    public struct Vector
+    public struct Vector : IEquatable<Vector>
     {
         public static Vector Zero = (0, 0);
 
@@ -18,10 +19,23 @@ namespace MyStrategy.DataModel
             Y = y;
         }
 
-        public float Length => (float)Math.Sqrt(Length2);
+        [JsonIgnore]
+        public float Length => Length2.Sqrt();
+        [JsonIgnore]
         public float Length2 => X * X + Y * Y;
+        
         public Vector ToLength(float len) => (len / Length) * this;
-        public bool IsZero => X.Abs() <= float.Epsilon && Y.Abs() <= float.Epsilon;
+
+        [JsonIgnore]
+        public bool IsZero => X.Abs() <= FloatExtensions.Epsilon && Y.Abs() <= FloatExtensions.Epsilon;
+        [JsonIgnore]
+        public bool IsDefault => Equals(default(Vector));
+        [JsonIgnore]
+        public Vector Unit => this / Length;
+        [JsonIgnore]
+        public Vector Ort => (Y, -X);
+        [JsonIgnore]
+        public Vector OrtUnit => Ort.Unit;
 
         public static Vector operator /(Vector a, float k)
         {
@@ -63,6 +77,16 @@ namespace MyStrategy.DataModel
             return a.X * b.X + a.Y * b.Y;
         }
 
+        public static bool operator ==(Vector a, Vector b)
+        {
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Vector a, Vector b)
+        {
+            return !a.Equals(b);
+        }
+
         public static implicit operator Vector((int, int) a)
         {
             return new Vector(a.Item1, a.Item2);
@@ -76,6 +100,21 @@ namespace MyStrategy.DataModel
         public static implicit operator Vector((double, double) a)
         {
             return new Vector((float)a.Item1, (float)a.Item2);
+        }
+
+        public bool Equals(Vector other)
+        {
+            return (this - other).IsZero;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals((Vector) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.GetHashCode(X.ToEpsilonHash(), Y.ToEpsilonHash());
         }
 
         public override string ToString()

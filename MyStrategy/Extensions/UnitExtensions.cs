@@ -57,7 +57,7 @@ namespace MyStrategy.Extensions
 
         public static bool IsAtDistance(this Unit unit, Vector position, float distance)
         {
-            return (position - unit.Position).Length2 <= distance * distance;
+            return unit.Position.IsAtDistance(position, distance);
         }
 
         public static bool IsAtSightDistance(this Unit unit, Unit enemy)
@@ -88,6 +88,21 @@ namespace MyStrategy.Extensions
                 .Select(u => new { V = nextUnitPosition - u.Position, R = u.Radius + unit.Radius })
                 .Select(v => v.V.ToLength(v.R - v.V.Length))
                 .Sum();
+        }
+
+        public static Line GetLinePath(this Unit unit, Unit enemy)
+        {
+            return new Line(unit.Position, enemy.Position);
+        }
+
+        public static Vector MoveToEnemy(this Unit unit, Unit enemy)
+        {
+            var obstacles = unit.GetActives().Where(u => u != enemy)
+                .Select(u => new Circle(u.Position, u.Radius + unit.Radius)).ToArray();
+
+            var pointToMove = new Line(unit.Position, unit.Position + (enemy.Position - unit.Position).ToLength(2*unit.Radius), unit.Id).FirstMoveToPassCircleObstacleGroup(unit.Speed, obstacles);
+
+            return pointToMove - unit.Position;
         }
     }
 }

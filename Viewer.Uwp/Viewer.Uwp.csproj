@@ -136,6 +136,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Scenes\scene.json" />
+    <Content Include="Scenes\scene2.json" />
     <None Include="Viewer.Uwp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

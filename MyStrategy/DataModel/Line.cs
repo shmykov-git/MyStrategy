@@ -5,28 +5,39 @@ namespace MyStrategy.DataModel
 {
     public struct Line
     {
-        public Vector A;
-        public Vector B;
+        public readonly int Id;
+        public readonly Vector A;
+        public readonly Vector B;
 
-        public float GetSignedDistance(Vector c)
+        public readonly Vector AB;
+        public readonly Vector Unit;
+        public readonly Vector OrtUnit;
+
+        public float GetDistanceToLine(Vector x) => OrtUnit * (x - A);
+        public float GetDistanceToA(Vector x) => Unit * (x - A);
+        public Vector ProjectionPoint(Vector x) => A + Unit * GetDistanceToA(x);
+        public bool IsInside(Vector x, float radius = 0) => Unit * (x - A) + radius > 0 && -Unit * (x - B) + radius > 0;
+        public bool IsAInside(Vector x, float radius = 0) => Unit * (x - A) + radius > 0;
+
+        public Line(Vector a, Vector b, int id = -1)
         {
-            var x0 = c.X;
-            var y0 = c.Y;
-            var x1 = A.X;
-            var y1 = A.Y;
-            var x2 = B.X;
-            var y2 = B.Y;
-
-            var d = ((y2 - y1) * x0 - (x2 - x1) * y0 + x2 * y1 - y2 * x1) /
-                    (float) Math.Sqrt((y2 - y1).Pow2() + (x2 - x1).Pow2());
-
-            return d;
-        }
-
-        public Line(Vector a, Vector b)
-        {
+            Id = id;
             A = a;
             B = b;
+
+            AB = B - A;
+            Unit = AB.Unit;
+            OrtUnit = Unit.Ort;
+        }
+
+        public static implicit operator Line((Vector, Vector) a)
+        {
+            return new Line(a.Item1, a.Item2);
+        }
+
+        public override string ToString()
+        {
+            return $"({A}, {B})";
         }
     }
 }

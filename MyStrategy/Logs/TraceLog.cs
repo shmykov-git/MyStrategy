@@ -3,7 +3,7 @@ using Suit.Logs;
 
 namespace MyStrategy.Logs
 {
-    public class NoLog : ILog
+    public class TraceLog : ILog
     {
         public void Warn(string msg)
         { }
@@ -18,7 +18,9 @@ namespace MyStrategy.Logs
         { }
 
         public void Trace(string msg)
-        { }
+        {
+            System.Diagnostics.Debug.WriteLine(msg);
+        }
 
         public void Error(string msg)
         { }

@@ -87,6 +87,7 @@ namespace Viewer.Uwp.Viewer
 
             unitControls.Clear();
             Page.Canvas.Children.Cast<Ellipse>().ToArray().ForEach(ellipse => Page.Canvas.Children.Remove(ellipse));
+            sceneManager.Scene.Units.ForEach(unit => GetUnitControl(unit));
 
             return sceneManager.PlayScene();
         }

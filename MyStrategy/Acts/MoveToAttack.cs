@@ -1,4 +1,5 @@
-﻿using MyStrategy.DataModel;
+﻿using System.Diagnostics;
+using MyStrategy.DataModel;
 using MyStrategy.Extensions;
 using Suit;
 using Suit.Logs;
@@ -37,8 +38,12 @@ namespace MyStrategy.Acts
                 if (attackEnemy != null)
                     Unit.RemoveAct(attackEnemy);
 
-                var move = (Enemy.Position - Unit.Position).ToLength(Unit.Speed);
-                Unit.Position += move + Unit.GetMoveIntersectCorrection(move);
+                //var move = (Enemy.Position - Unit.Position).ToLength(Unit.Speed);
+                //Unit.Position += move + Unit.GetMoveIntersectCorrection(move);
+
+                var move = Unit.MoveToEnemy(Enemy).ToLength(Unit.Speed);
+                //Debug.WriteLine($"{Unit.Id}: {move}");
+                Unit.Position += move; // + Unit.GetMoveIntersectCorrection(move);
 
                 log.Debug($"{Unit.Id} move to Enemy {Enemy.Id}");
             }

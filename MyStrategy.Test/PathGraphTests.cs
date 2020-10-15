@@ -17,33 +17,26 @@ namespace MyStrategy.Test
         [TestMethod]
         public void FindNumsTest()
         {
+            SquarePolygon centerWall = ((50, 50), 30);
+
             var graph = new PathGraph(100, 100);
-            AddWalls(graph, 20);
+            graph.AddWall(centerWall);
 
             graph.FindNums((2, 2));
 
             Debug.WriteLine(graph.ToNums());
         }
 
-        private void AddWalls(PathGraph graph, int k)
-        {
-            var kk = graph.Dim.I - k;
-            for (var i = k; i <= kk; i++)
-            {
-                graph[i, k] = true;
-                graph[k, i] = true;
-                graph[kk, i] = true;
-                graph[i, kk] = true;
-            }
-        }
-
         [TestMethod]
         public void FindPathTest()
         {
+            SquarePolygon pointToGo = ((11, 5), 2);
+            SquarePolygon centerWall = ((15, 15), 5);
+
             var graph = new PathGraph(30, 30);
-            AddWalls(graph, 5);
-            
-            graph.FindPath((2, 2));
+            graph.AddWall(centerWall);
+
+            graph.FindPath(pointToGo);
 
             Debug.WriteLine(graph.ToPath());
         }

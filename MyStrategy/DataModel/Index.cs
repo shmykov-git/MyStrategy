@@ -7,7 +7,9 @@ namespace MyStrategy.DataModel
     public struct Index : IEquatable<Index>
     {
         public static Index Zero => new Index(0, 0);
-        public static Index None => new Index(-1, -1);
+        public static Index A => new Index(-1, -1);
+        public static Index B => new Index(-2, -2);
+        public static Index W => new Index(-8, -8);
 
         public readonly int I;
         public readonly int J;

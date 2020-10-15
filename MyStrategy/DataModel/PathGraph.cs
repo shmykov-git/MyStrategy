@@ -29,6 +29,12 @@ namespace MyStrategy.DataModel
             set => net[i, j].Value = value;
         }
 
+        public bool this[Index ind]
+        {
+            get => net[ind.I, ind.J].Value;
+            set => net[ind.I, ind.J].Value = value;
+        }
+
         private void Clean()
         {
             if (isCleaned)
@@ -41,6 +47,16 @@ namespace MyStrategy.DataModel
             }
 
             isCleaned = true;
+        }
+
+        private void AddTempWall(PathPoligon poligon)
+        {
+            poligon.ForEach(ind=> net[ind.I, ind.J].IsVisited = true);
+        }
+
+        public void AddWall(PathPoligon poligon)
+        {
+            poligon.ForEach(ind => this[ind] = true);
         }
 
         public PathGraph(int m, int n) : this((m, n)) { }
@@ -70,18 +86,14 @@ namespace MyStrategy.DataModel
         }
 
         [LoggingAspect(LoggingRule.Performance)]
-        public void FindPath(Index findPos)
+        public void FindPath(PathPoligon poligon)
         {
             Clean();
 
-            FindPathInternal(findPos);
+            FindPathInternal(poligon);
 
             isCleaned = false;
         }
-
-        private static readonly char[] Arrows = { '•', '←', '↑', '→', '↓' };
-        private static readonly List<Index> ArrowDirs = new Index[] {(0, 0), (0, 1), (1, 0), (0, -1), (-1, 0)}.ToList();
-        private static char DirToArrow(Index dir) => Arrows[ArrowDirs.IndexOf(dir)];
 
         private static readonly Index[] Dirs = { (0, 1), (1, 0), (0, -1), (-1, 0) };
         private bool IsCorrect(Index ind) => ind.I >= 0 && ind.I < Dim.I && ind.J >= 0 && ind.J < Dim.J;
@@ -104,10 +116,13 @@ namespace MyStrategy.DataModel
             }
         }
 
-        private void FindPathInternal(Index findPos)
+        private void FindPathInternal(PathPoligon poligon)
         {
+            if (poligon.HasSubPoligon)
+                AddTempWall(poligon.SubPoligon);
+
             var queue = new Queue<(Index, Index)>(8 * Math.Min(Dim.I, Dim.J));
-            queue.Enqueue((findPos, Index.Zero));
+            poligon.ForEach(ind => queue.Enqueue((ind, Index.B)));
 
             while (queue.Count > 0)
             {
@@ -137,6 +152,10 @@ namespace MyStrategy.DataModel
             return builder.ToString();
         }
 
+        private static readonly char[] Arrows = { '•', ' ', '←', '↑', '→', '↓' };
+        private static readonly List<Index> ArrowDirs = new[] { Index.B, (0, 0), (0, 1), (1, 0), (0, -1), (-1, 0) }.ToList();
+        private static char DirToArrow(Index dir) => Arrows[ArrowDirs.IndexOf(dir)];
+
         public string ToPath()
         {
             var builder = new StringBuilder(5 * Dim.I * Dim.J);
@@ -144,7 +163,10 @@ namespace MyStrategy.DataModel
             {
                 for (var j = 0; j < Dim.J; j++)
                 {
-                    builder.Append($" {DirToArrow(net[i, j].Dir)} ");
+                    if (net[i, j].Value)
+                        builder.Append($" ▄ ");
+                    else
+                        builder.Append($" {DirToArrow(net[i, j].Dir)} ");
                 }
 
                 builder.Append("\r\n");

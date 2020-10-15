@@ -15,20 +15,37 @@ namespace MyStrategy.Test
         }
 
         [TestMethod]
-        public void FindAllTest()
+        public void FindNumsTest()
         {
             var graph = new PathGraph(100, 100);
+            AddWalls(graph, 20);
 
-            for (var i = 20; i <= 80; i++)
+            graph.FindNums((2, 2));
+
+            Debug.WriteLine(graph.ToNums());
+        }
+
+        private void AddWalls(PathGraph graph, int k)
+        {
+            var kk = graph.Dim.I - k;
+            for (var i = k; i <= kk; i++)
             {
-                graph[i, 20] = true;
-                graph[20, i] = true;
-                graph[80, i] = true;
-                graph[i, 80] = true;
+                graph[i, k] = true;
+                graph[k, i] = true;
+                graph[kk, i] = true;
+                graph[i, kk] = true;
             }
-            graph.FindAll((2,2));
+        }
+
+        [TestMethod]
+        public void FindPathTest()
+        {
+            var graph = new PathGraph(30, 30);
+            AddWalls(graph, 5);
             
-            Debug.WriteLine(graph);
+            graph.FindPath((2, 2));
+
+            Debug.WriteLine(graph.ToPath());
         }
     }
 }

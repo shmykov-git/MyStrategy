@@ -13,7 +13,8 @@ namespace MyStrategy.DataModel
         public readonly Vector Unit;
         public readonly Vector OrtUnit;
 
-        public float GetDistanceToLine(Vector x) => OrtUnit * (x - A);
+        public float GetSignedDistanceToLine(Vector x) => OrtUnit * (x - A);
+        public float GetDistanceToLine(Vector x) => GetSignedDistanceToLine(x).Abs();
         public float GetDistanceToA(Vector x) => Unit * (x - A);
         public Vector ProjectionPoint(Vector x) => A + Unit * GetDistanceToA(x);
         public bool IsInside(Vector x, float radius = 0) => Unit * (x - A) + radius > 0 && -Unit * (x - B) + radius > 0;

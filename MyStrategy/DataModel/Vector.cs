@@ -10,8 +10,8 @@ namespace MyStrategy.DataModel
     {
         public static Vector Zero = (0, 0);
 
-        public float X;
-        public float Y;
+        public readonly float X;
+        public readonly float Y;
 
         public Vector(float x, float y)
         {

@@ -41,7 +41,7 @@ namespace MyStrategy.Acts
                 //var move = (Enemy.Position - Unit.Position).ToLength(Unit.Speed);
                 //Unit.Position += move + Unit.GetMoveIntersectCorrection(move);
 
-                var move = Unit.MoveToEnemy(Enemy).ToLength(Unit.Speed);
+                var move = Unit.MoveToEnemy(Enemy);
                 //Debug.WriteLine($"{Unit.Id}: {move}");
                 Unit.Position += move; // + Unit.GetMoveIntersectCorrection(move);
 

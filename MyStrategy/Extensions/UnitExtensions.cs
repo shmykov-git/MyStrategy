@@ -100,9 +100,15 @@ namespace MyStrategy.Extensions
             var obstacles = unit.GetActives().Where(u => u != enemy)
                 .Select(u => new Circle(u.Position, u.Radius + unit.Radius)).ToArray();
 
-            var pointToMove = new Line(unit.Position, unit.Position + (enemy.Position - unit.Position).ToLength(2*unit.Radius), unit.Id).FirstMoveToPassCircleObstacleGroup(unit.Speed, obstacles);
-
+            var pointToMove = new Line(unit.Position, unit.Position + (enemy.Position - unit.Position).ToLength(2*unit.Radius), unit.Id)
+                .FirstMoveToPassCircleObstacleGroup(unit.Speed, obstacles);
+            
             return pointToMove - unit.Position;
         }
+
+        //public static bool IsObstacleOnTheWay(this Unit unit, Vector point, Obstacle obstacle)
+        //{
+
+        //}
     }
 }

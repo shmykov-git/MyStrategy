@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OptimizedPriorityQueue" Version="5.0.0" />
     <PackageReference Include="shmykov.dev.Suit" Version="1.0.3" />
   </ItemGroup>
 

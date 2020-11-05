@@ -14,6 +14,9 @@ namespace MyStrategy.DataModel
         public readonly int I;
         public readonly int J;
 
+        public int AbsSum => I.Abs() + J.Abs();
+        public int Sum => I + J;
+
         public Index(int i, int j)
         {
             I = i;
